@@ -38,3 +38,8 @@ Extract emails from a repo of the user:
 # or
 ./gce.py --user USERNAME --repo REPO
 ```
+
+## Dependencies
+- `httpx`: For HTTP requests
+- `argparse`: To parse CLI args
+- `black`: For code formatting
