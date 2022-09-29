@@ -10,10 +10,10 @@ Automate extracting author emails from git repo commits. Wrote this to help me i
 
 ---
 
-Usage:
+## Usage:
 ```bash
 ./gce.py -h
-usage: gce.py [-h] -u USERNAME [-r REPO]
+usage: gce.py [-h] -u USERNAME [-r REPO] [-f FILENAME]
 
 Extract author emails from git repo
 
@@ -21,7 +21,9 @@ options:
   -h, --help            show this help message and exit
   -u USERNAME, --user USERNAME
                         Specify the username
-  -r REPO, --repo REPO  Specify the repo
+  -r REPO, --repo REPO  Specify the repo (separate with comma(s) if multiple)
+  -f FILENAME, --file FILENAME
+                        Specify the filename (.json) (default: gce.json)
 ```
 
 
@@ -32,11 +34,13 @@ Extract emails from every repo of a user:
 ./gce.py --user USERNAME
 ```
 
-Extract emails from a repo of the user:
+Extract emails from one or more repos of the user:
 ```bash
 ./gce.py -u USERNAME -r REPO
 # or
 ./gce.py --user USERNAME --repo REPO
+# e.g.
+# -r repo1,repo2,repo3
 ```
 
 ## Dependencies

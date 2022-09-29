@@ -79,7 +79,7 @@ def main():
         "-r",
         "--repo",
         type=str,
-        help="Specify the repo",
+        help="Specify the repo (separate with comma(s) if multiple)",
     )
 
     parser.add_argument(
@@ -88,7 +88,7 @@ def main():
         dest="filename",
         type=str,
         default="gce.json",
-        help="Specify the filename (.json)",
+        help="Specify the filename (.json) (default: gce.json)",
     )
 
     args = parser.parse_args()
