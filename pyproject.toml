@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "gce"
+version = "0.1.0"
+description = "Extract author emails from git repo commits"
+authors = ["jarp0l"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+argparse = "^1.4.0"
+httpx = "^0.23.0"
+
+[tool.poetry.dev-dependencies]
+black = "^22.8.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
