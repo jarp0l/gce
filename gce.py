@@ -1,5 +1,6 @@
 #!/bin/env python3
 import httpx
+import json
 from string import Template
 from argparse import ArgumentParser
 
@@ -49,6 +50,17 @@ def parse_commits(**kwargs) -> tuple:
     return commit_info
 
 
+def save_to_file(**kwargs):
+    """
+    Save info to file
+    """
+    filename = kwargs["filename"]
+    data = kwargs["data"]
+
+    with open(filename, "w") as fp:
+        json.dump(data, fp, indent=2)
+
+
 def main():
     repos = list()
     commits = list()
@@ -70,20 +82,39 @@ def main():
         help="Specify the repo",
     )
 
+    parser.add_argument(
+        "-f",
+        "--file",
+        dest="filename",
+        type=str,
+        default="gce.json",
+        help="Specify the filename (.json)",
+    )
+
     args = parser.parse_args()
 
-    if args.username and args.repo is None:
+    if args.username:
+        data = dict()
+
         username = args.username
-        repos = get_repos(username=username)
+
+        if args.repo is not None:
+            repos = args.repo
+            repos = (
+                repos.split(",")
+                if not repos.split(",").count("")
+                else repos.split(",").remove("")
+            )
+        else:
+            repos = get_repos(username=username)
+
         for repo in repos:
             repo_commits = get_commits(username=username, repo_name=repo)
-            print(parse_commits(commits=repo_commits))
+            parsed_info = parse_commits(commits=repo_commits)
+            data = {"repo": repo, "parsed_info": parsed_info}
+            commits.append(data)
 
-    if args.repo:
-        username = args.username
-        repo = args.repo
-        repo_commits = get_commits(username=username, repo_name=repo)
-        print(parse_commits(commits=repo_commits))
+        save_to_file(data=commits, filename=args.filename)
 
 
 if __name__ == "__main__":
